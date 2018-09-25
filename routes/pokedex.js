@@ -36,6 +36,21 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:pid', (req, res) => {
+    console.log(`Sending a request to ${pokeapi}`);
+    request(pokeapi + '/' + req.params.pid, function (err, response, body) {
+        if (err) {
+            throw err; // If we get an error then bail
+        }
+
+        // Use Express to send the JSON back to the client in the web response
+        let jsonResp = JSON.parse(body); // Pull out the JSON body so we can add 'image URL' and 'id' before returning to client
+        res.send(jsonResp);
+    });
+});
+
+
+
 
 // Export the routes
 module.exports = router;
